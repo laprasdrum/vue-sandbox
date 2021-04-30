@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>TODO app</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body>
+        <div id="app">
+            <p>{{ title }}</p>
+            <div class="new-todo">
+                <div class="new-todo-item">
+                    <label for="new-todo-title">タイトル</label>
+                    <input v-model="todoTitle" type="text" id="new-todo-title"/>
+                </div>
+                <div class="new-todo-item">
+                    <label for="new-todo-description">説明</label>
+                    <textarea v-model="todoDescription" id="new-todo-description"></textarea>
+                </div>
+            </div>
+            <div>
+                <!-- single -->
+                <div>
+                    <input type="checkbox" v-model="todoCategory" />
+                    <p>{{ todoCategory }}</p>
+                </div>
+                <!-- multiple -->
+                <div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="category-1"
+                            v-model="todoCategories"
+                            value="category-1"
+                        />
+                        <label for="category-1">category-1</label>
+                    </div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="category-2"
+                            v-model="todoCategories"
+                            value="category-2"
+                        />
+                        <label for="category-2">category-2</label>
+                    </div>
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="category-3"
+                            v-model="todoCategories"
+                            value="category-3"
+                        />
+                        <label for="category-3">category-3</label>
+                    </div>
+                    <p>{{ todoCategories }}</p>
+                </div>
+                <!-- search -->
+                <div class="todo-search">
+                    <div class="todo-search-item">
+                        <label for="todo-search-keyword">キーワードで検索</label>
+                        <input v-model="searchWord" type="text" id="todo-search-keyword"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
