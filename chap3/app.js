@@ -7,6 +7,9 @@ const app = Vue.createApp({
             searchWord: '',
             todoCategory: false,
             todoCategories: [],
+            hideDoneTodo: false,
+            author: '',
+            order: ''
         }
     },
 }).mount('#app')
