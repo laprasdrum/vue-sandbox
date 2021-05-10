@@ -7,11 +7,34 @@ const app = Vue.createApp({
             searchWord: '',
             todoCategory: false,
             todoCategories: [],
+            seletedCategory: '',
+            todos: [],
+            categories: [],
             hideDoneTodo: false,
             author: '',
-            order: '',
+            order: 'desc',
             count: 0,
             categoryName: ''
+        }
+    },
+    watch: {
+        title(next, prev) {
+            console.log(`${prev} -> ${next}`)
+        },
+        titleText(next, prev) {
+            console.log(`computed: ${prev} -> ${next}`)
+        },
+        todos: {
+            handler(next) {
+                window.localStorage.setItem('todos', JSON.stringify(next))
+            },
+            deep: true
+        },
+        categories: {
+            handler(next) {
+                window.localStorage.setItem('categories', JSON.stringify(next))
+            },
+            deep: true
         }
     },
     computed: {
@@ -31,7 +54,14 @@ const app = Vue.createApp({
             return this.todoTitle !== ''
         },
         canCreateCategory() {
-            return this.categoryName !== ''
+            return this.categoryName !== '' && !this.existsCategory
+        },
+        existsCategory() {
+            const categoryName = this.categoryName
+            return this.categories.indexOf(categoryName) !== -1
+        },
+        titleText() {
+            return `todoTitle: ${this.title}`
         }
     },
     methods: {
@@ -47,6 +77,14 @@ const app = Vue.createApp({
             }
 
             // add todo
+            this.todos.push({
+                id: `todo-${Date.now()}`,
+                title: this.todoTitle,
+                description: this.todoDescription,
+                categories: this.todoCategories,
+                dateTime: Date.now(),
+                done: false,
+            })
 
             this.todoTitle = ''
             this.todoDescription = ''
@@ -58,8 +96,25 @@ const app = Vue.createApp({
             }
 
             // add category
+            this.categories.push(this.categoryName)
 
             this.categoryName = ''
+        },
+        changeTitle() {
+            console.log('ok')
+            this.todos[0].title = 'TITLE WAS CHANGED'
+            console.log(this.todos[0].title)
+        }
+    },
+    created() {
+        const todos = window.localStorage.getItem('todos')
+        const categories = window.localStorage.getItem('categories')
+
+        if (todos) {
+            this.todos = JSON.parse(todos)
+        }
+        if (categories) {
+            this.categories = JSON.parse(categories)
         }
     },
 }).mount('#app')
