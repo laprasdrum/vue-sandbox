@@ -12,6 +12,37 @@
             <!-- <input type="text" v-model.number="title"/> -->
             <!-- <input type="text" v-model.trim="title" /> -->
             <p>{{ title }}</p>
+            <div>
+                <!-- 'xxx' 以外は js data/computed/method など -->
+                <div
+                    v-bind:class="[className, 'selected', classNameComputed, classNameMethod()]"
+                ></div>
+                <!-- array data (data 内で data/computed/method の参照はできない) -->
+                <div
+                    v-bind:class="classArr"
+                ></div>
+                <!-- class -->
+                <div
+                    v-bind:class="{'is-active': isActive, 'is-inactive': !isActive}"
+                ></div>
+                <!-- class (computed) -->
+                <div
+                    v-bind:class="mockClass"
+                ></div>
+                <!-- static + dynamic class attribute -->
+                <div
+                    class="default-class" v-bind:class="mockClass"
+                ></div>
+                <!-- 一つにまとめる -->
+                <div
+                    v-bind:class="['default-class', mockClass]"
+                ></div>
+                <button type="button" @click="onClick">画像差し替え</button>
+                <button v-bind:disabled="disabled">disabled</button>
+                <div>
+                    <img v-bind:src="imgSrc" alt="" />
+                </div>
+            </div>
             <div class="new-todo">
                 <div class="new-todo-item">
                     <label for="new-todo-title">タイトル</label>

@@ -14,7 +14,12 @@ const app = Vue.createApp({
             author: '',
             order: 'desc',
             count: 0,
-            categoryName: ''
+            categoryName: '',
+            imgSrc: 'https://wonwon-eater.com/wp-content/uploads/2020/03/solarized-yinyang.png',
+            disabled: true,
+            className: 'from-data-class-name',
+            classArr: ['class-name-1', 'class-name-2'],
+            isActive: false,
         }
     },
     watch: {
@@ -62,6 +67,15 @@ const app = Vue.createApp({
         },
         titleText() {
             return `todoTitle: ${this.title}`
+        },
+        classNameComputed() {
+            return 'from-computed-class-name'
+        },
+        mockClass() {
+            return {
+                'is-active': this.isActive,
+                'is-inactive': !this.isActive,
+            }
         }
     },
     methods: {
@@ -104,6 +118,12 @@ const app = Vue.createApp({
             console.log('ok')
             this.todos[0].title = 'TITLE WAS CHANGED'
             console.log(this.todos[0].title)
+        },
+        onClick() {
+            this.imgSrc = 'https://opengraph.githubassets.com/ffd57577a9276a54bfd836f93fc0adbb540ff400f2d329c620c8943645d1685c/braver/vscode-solarized'
+        },
+        classNameMethod() {
+            return 'from-methods-class-name'
         }
     },
     created() {
