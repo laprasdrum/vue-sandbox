@@ -37,10 +37,13 @@
                 <div
                     v-bind:class="['default-class', mockClass]"
                 ></div>
-                <button type="button" @click="onClick">画像差し替え</button>
-                <button v-bind:disabled="disabled">disabled</button>
-                <div>
-                    <img v-bind:src="imgSrc" alt="" />
+                <div v-show="isShow" :style="{ color: defaultColor }">
+                    <button type="button" @click="onClick">画像差し替え</button>
+                    <button v-bind:disabled="disabled">disabled</button>
+                    <img v-if="isShow" :src="imgSrc" alt="" />
+                    <div v-if="value >= 10">10+</div>
+                    <div v-else-if="value >= 5">5~9</div>
+                    <div v-else>~4</div>
                 </div>
             </div>
             <div class="new-todo">
@@ -68,12 +71,12 @@
                             v-model.trim="categoryName"
                             type="text"
                         />
-                        <button type="submit">作成</button>
+                        <button type="submit" :disabled="!canCreateCategory">作成</button>
                     </form>
                 </div>
                 <div class="new-todo-action">
                     <form id="form-todo" @submit.prevent="createTodo">
-                        <button type="submit">作成</button>
+                        <button type="submit" :disabled="!canCreateTodo">作成</button>
                     </form>
                 </div>
                 <!-- <button type="button" v-on:click="onClickCountUp">Count Up</button> -->
@@ -156,6 +159,11 @@
                         <input v-model.trim="searchWord" type="text" id="todo-search-keyword"/>
                     </div>
                 </div>
+                <ul v-if="hasTodos" class="todo-list">
+                </ul>
+                <p v-else>Todo タスクはまだ登録されていません</p>
+                <div v-for="item in items">{{ item }}</div>
+                <div v-for="(item, index) in items">{{ index }}: {{ item }}</div>
             </div>
         </div>
         <script src="app.js"></script>

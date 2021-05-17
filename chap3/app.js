@@ -20,6 +20,10 @@ const app = Vue.createApp({
             className: 'from-data-class-name',
             classArr: ['class-name-1', 'class-name-2'],
             isActive: false,
+            defaultColor: 'blue',
+            isShow: false,
+            value: 5.01,
+            items: ['item1', 'item2'],
         }
     },
     watch: {
@@ -76,7 +80,13 @@ const app = Vue.createApp({
                 'is-active': this.isActive,
                 'is-inactive': !this.isActive,
             }
+        },
+        hasTodos() {
+            return this.todos.length > 0
         }
+    },
+    mounted() {
+        // this.reset()
     },
     methods: {
         // computed と違い、実行結果がキャッシュされない
@@ -124,6 +134,9 @@ const app = Vue.createApp({
         },
         classNameMethod() {
             return 'from-methods-class-name'
+        },
+        reset() {
+            window.localStorage.clear()
         }
     },
     created() {
