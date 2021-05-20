@@ -11,6 +11,7 @@
             <!-- <input type="text" v-model.lazy="title" /> -->
             <!-- <input type="text" v-model.number="title"/> -->
             <!-- <input type="text" v-model.trim="title" /> -->
+            <!-- <div v-for="obj in object" :key="obj.id">{{ obj.name }}</div> -->
             <p>{{ title }}</p>
             <div>
                 <!-- 'xxx' 以外は js data/computed/method など -->
@@ -66,6 +67,13 @@
                 </div>
                 <div class="new-todo-category">
                     カテゴリ
+                    <ul>
+                        <li v-for="category in categories" :key="category">
+                            <label :for="'category-' + category">
+                                <input v-model="todoCategories" type="checkbox" :id="'category-' + category" :value="category" form="form-todo" /> {{ category }}
+                            </label>
+                        </li>
+                    </ul>
                     <form @submit.prevent="createCategory">
                         <input
                             v-model.trim="categoryName"
@@ -146,6 +154,13 @@
                 <!-- search -->
                 <div class="todo-search">
                     <div class="todo-search-item">
+                        <label for="todo-search-category">カテゴリでフィルタ</label>
+                        <select v-model="selectedCategory" id="todo-search-category">
+                            <option value="">指定なし</option>
+                            <option v-for="(category, _) in categories" :key="category" :value="category">{{ category }}</option>
+                        </select>
+                    </div>
+                    <div class="todo-search-item">
                         <label for="todo-search-done">終了したものを非表示にする<input v-model="hideDoneTodo" type="checkbox" id="todo-search-done"/></label>
                     </div>
                     <div class="todo-search-item">
@@ -160,10 +175,30 @@
                     </div>
                 </div>
                 <ul v-if="hasTodos" class="todo-list">
+                    <li v-for="(todo, index) in resultTodos" :key="todo.id" class="todo-item">
+                        <div class="todo-item-done">
+                            <input v-model="todo.done" type="checkbox" />
+                        </div>
+                        <div class="todo-item-content">
+                            <div class="todo-item-date">{{ new Date(todo.dateTime).toString() }}</div>
+                            <h3 class="todo-item-title">{{ todo.title }}</h3>
+                            <div v-if="todo.description" class="todo-item-description">
+                                {{ todo.description }}
+                            </div>
+                        </div>
+                        <ul class="todo-item-categories" v-if="todo.categories.length > 0">
+                            <li v-for="(category, _) in todo.categories" :key="category" class="todo-item-category">
+                                {{ category }}
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <p v-else>Todo タスクはまだ登録されていません</p>
-                <div v-for="item in items">{{ item }}</div>
-                <div v-for="(item, index) in items">{{ index }}: {{ item }}</div>
+                <!-- <div v-for="item in items">{{ item }}</div>
+                <div v-for="(item, index) in items">{{ index }}: {{ item }}</div> -->
+            </div>
+            <div>
+                <button type="submit" @click="resetCache">reset cache</button>
             </div>
         </div>
         <script src="app.js"></script>

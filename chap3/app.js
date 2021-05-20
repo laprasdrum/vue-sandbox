@@ -24,6 +24,20 @@ const app = Vue.createApp({
             isShow: false,
             value: 5.01,
             items: ['item1', 'item2'],
+            object: [
+                {
+                    id: 1,
+                    name: 'ヤマダ',
+                    age: 40,
+                    gender: 'female',
+                },
+                {
+                    id: 2,
+                    name: 'ヒカワ',
+                    age: 28,
+                    gender: 'male',
+                },
+            ],
         }
     },
     watch: {
@@ -83,6 +97,27 @@ const app = Vue.createApp({
         },
         hasTodos() {
             return this.todos.length > 0
+        },
+        resultTodos() {
+            const selectedCategory = this.selectedCategory
+            const hideDoneTodo = this.hideDoneTodo
+            const order = this.order
+            const searchWord = this.searchWord
+            return this.todos
+                .filter((todo) =>selectedCategory === '' || todo.categories.indexOf(selectedCategory !== -1))
+                .filter((todo) => {
+                    if (hideDoneTodo) {
+                        return !todo.done
+                    }
+                    return true
+                })
+                .filter((todo) => todo.title.indexOf(searchWord) !== -1 || todo.description.indexOf(searchWord) !== -1)
+                .sort((a, b) => {
+                    if (order === 'asc') {
+                        return a.dateTime - b.dateTime
+                    }
+                    return b.dateTime - a.dateTime
+                })
         }
     },
     mounted() {
@@ -135,8 +170,9 @@ const app = Vue.createApp({
         classNameMethod() {
             return 'from-methods-class-name'
         },
-        reset() {
+        resetCache() {
             window.localStorage.clear()
+            window.location.reload()
         }
     },
     created() {
