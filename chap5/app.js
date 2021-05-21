@@ -5,10 +5,10 @@ Vue.createApp({
         'my-title': {
             data() {
                 return {
-                    title: '',
+                    title: '2',
                 }
             },
-            template: `<input type="text" v-model="title" />`,
+            template: '#title-template',
         }
     }
 })
@@ -18,5 +18,5 @@ Vue.createApp({
             title: 'text here',
         }
     },
-    template: `<input type="text" v-model="title" />`,
+    template: `<input type="date" v-model="title" />`,
 }).mount('#app')
