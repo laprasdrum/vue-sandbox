@@ -10,13 +10,17 @@
     <!-- mount する id:app 以外では component 使えない -->
     <!-- <my-title></my-title> -->
     <div id="app">
-      <my-title></my-title>
+      <my-title :name="authorName"></my-title>
       <!-- この記法はだめ -->
       <my-title />
-      <my-title></my-title>
+      <!-- computed は bind できない -->
+      <my-title :name="authorFullName"></my-title>
     </div>
     <script type="text/x-template" id="title-template">
-      <input type="text" v-model="title" />
+      <!-- <input type="text" v-model="title" /> -->
+      <div>
+        <p>upper name: {{ upperCaseName }}</p>
+      </div>
     </script>
     <script src="app.js"></script>
   </body>
