@@ -11,8 +11,10 @@
     <!-- <my-title></my-title> -->
     <div id="app">
       <!-- <count-up-button @count-up="countUpValue"></count-up-button> -->
-      <count-up-button @count-up="count += $event"></count-up-button>
-      <div>{{ count }}</div>
+      <!-- <count-up-button @count-up="count += $event"></count-up-button> -->
+      <!-- <count-up-button :count="count" @count-up="countUpValue"></count-up-button> -->
+      <count-up-button v-model:count="totalCount"></count-up-button>
+      <div>{{ totalCount }}</div>
       <my-title :name="authorName"></my-title>
       <!-- この記法はだめ -->
       <my-title />
@@ -26,7 +28,8 @@
       </div>
     </script>
     <script type="text/x-template" id="btn-template">
-      <button type="button" @click="onClick">count up</button>
+      <!-- <button type="button" @click="onClick">count up</button> -->
+      <button type="button" @click="onClick">count up | {{ count }} + 1</button>
     </script>
     <script src="app.js"></script>
   </body>

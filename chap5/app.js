@@ -23,9 +23,15 @@ const myTitle = {
 }
 const countUpButton = {
   template: '#btn-template',
+  props: {
+    count: {
+      type: Number,
+      required: true,
+    }
+  },
   methods: {
     onClick() {
-      this.$emit('count-up', 3)
+      this.$emit('update:count', this.count + 1)
     },
   },
 }
@@ -34,7 +40,7 @@ Vue.createApp({
   data() {
     return {
       authorName: 'yamada',
-      count: 0,
+      totalCount: 0,
     }
   },
   // local component (.component は global component)
@@ -49,8 +55,8 @@ Vue.createApp({
     },
   },
   // methods: {
-  //   countUpValue(value) {
-  //     this.count += value
+  //   countUpValue(nextValue) {
+  //     this.totalCount = nextValue
   //   },
   // },
 })
