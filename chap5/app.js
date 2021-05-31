@@ -21,23 +21,38 @@ const myTitle = {
   },
   template: '#title-template',
 }
+const countUpButton = {
+  template: '#btn-template',
+  methods: {
+    onClick() {
+      this.$emit('count-up', 3)
+    },
+  },
+}
 
 Vue.createApp({
   data() {
     return {
       authorName: 'yamada',
+      count: 0,
     }
   },
   // local component (.component は global component)
   // 同じ定義が global にもある場合、local が優先される
   components: {
     'my-title': myTitle,
+    'count-up-button': countUpButton,
   },
   computed: {
     authorFullName() {
       return `shingo ${this.authorName}`
     },
   },
+  // methods: {
+  //   countUpValue(value) {
+  //     this.count += value
+  //   },
+  // },
 })
 // こちらは global
 .component('my-title', {
