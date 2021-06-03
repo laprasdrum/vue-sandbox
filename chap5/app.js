@@ -36,11 +36,37 @@ const countUpButton = {
   },
 }
 
+const updateAuthor = {
+  template: '#update-author-template',
+  props: {
+    name: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+  },
+  methods: {
+    onClickAge() {
+      this.$emit('update:age', this.age + 1)
+    },
+    onInput($event) {
+      this.$emit('update:name', $event.target.value)
+    }
+  },
+}
+
 Vue.createApp({
   data() {
     return {
       authorName: 'yamada',
       totalCount: 0,
+      author: {
+        name: 'Jobs',
+        age: 23,
+      },
     }
   },
   // local component (.component は global component)
@@ -48,6 +74,7 @@ Vue.createApp({
   components: {
     'my-title': myTitle,
     'count-up-button': countUpButton,
+    'update-author': updateAuthor,
   },
   computed: {
     authorFullName() {
