@@ -175,23 +175,12 @@
         </div>
       </div>
       <ul v-if="hasTodos" class="todo-list">
-        <li v-for="(todo, index) in resultTodos" :key="todo.id" class="todo-item">
-          <div class="todo-item-done">
-            <input v-model="todo.done" type="checkbox" />
-          </div>
-          <div class="todo-item-content">
-            <div class="todo-item-date">{{ new Date(todo.dateTime).toString() }}</div>
-            <h3 class="todo-item-title">{{ todo.title }}</h3>
-            <div v-if="todo.description" class="todo-item-description">
-              {{ todo.description }}
-            </div>
-          </div>
-          <ul class="todo-item-categories" v-if="todo.categories.length > 0">
-            <li v-for="(category, _) in todo.categories" :key="category" class="todo-item-category">
-              {{ category }}
-            </li>
-          </ul>
-        </li>
+        <todo-item
+          v-for="(todo, index) in resultTodos"
+          :key="todo.id"
+          :todo="todo"
+          v-model:done="todo.done"
+        ></todo-item>
       </ul>
       <p v-else>Todo タスクはまだ登録されていません</p>
       <!-- <div v-for="item in items">{{ item }}</div>
@@ -201,6 +190,27 @@
         <button type="submit" @click="resetCache">reset cache</button>
       </div>
     </div>
+    <script type="text/x-template" id="template-todo-item">
+      <li class="todo-item">
+        <div class="todo-item-done">
+          <input :checked="done" @change="onChangeTodo" type="checkbox">
+        </div>
+        <div class="todo-item-content">
+          <div class="todo-item-date">{{ new Date(todo.dateTime).toString() }}</div>
+          <h3 class="todo-item-title">{{ todo.title }}</h3>
+          <div v-if="todo.description" class="todo-item-description">
+            {{ todo.description }}
+          </div>
+          <ul class="todo-item-categories" v-if="hasCategories">
+            <li
+              v-for="(category, _) in todo.categories"
+              :key="category"
+              class="todo-item-category"
+            >{{ category }}</li>
+          </ul>
+        </div>
+      </li>
+    </script>
     <script src="app.js"></script>
   </body>
   </html>
