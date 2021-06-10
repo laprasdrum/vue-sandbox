@@ -26,6 +26,28 @@
       ></update-author>
       <div>name: {{ author.name }}</div>
       <div>age: {{ author.age }}</div>
+      <div>
+        <button @click="isShow = !isShow">Toggle</button>
+        <transition
+          @before-enter="beforeEnter"
+          @enter="enter"
+          @after-enter="afterEnter"
+          @enter-cancelled="enterCancelled"
+          @before-leave="beforeLeave"
+          @leave="leave"
+          @after-leave="afterLeave"
+          @leave-cancelled="leaveCancelled"
+          :css="false"
+        >
+          <div v-show="isShow">transition</div>
+        </transition>
+      </div>
+      <div>
+        <button @click="filterDone = !filterDone">Toggle Filter</button>
+        <transition-group tag="ul">
+          <li v-for="(item, _) in filteredItems" :key="item.title">{{ item.title }}</li>
+        </transition-group>
+      </div>
     </div>
     <script type="text/x-template" id="title-template">
       <!-- <input type="text" v-model="title" /> -->

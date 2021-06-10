@@ -67,6 +67,26 @@ Vue.createApp({
         name: 'Jobs',
         age: 23,
       },
+      isShow: false,
+      filterDone: false,
+      items: [
+        {
+          title: 'title - 1',
+          done: false,
+        },
+        {
+          title: 'title - 2',
+          done: true,
+        },
+        {
+          title: 'title - 3',
+          done: true,
+        },
+        {
+          title: 'title - 4',
+          done: false,
+        },
+      ]
     }
   },
   // local component (.component は global component)
@@ -80,12 +100,44 @@ Vue.createApp({
     authorFullName() {
       return `shingo ${this.authorName}`
     },
+    filteredItems() {
+      if (this.filterDone) {
+        return this.items.filter(item => item.done)
+      }
+      return this.items
+    }
   },
-  // methods: {
-  //   countUpValue(nextValue) {
-  //     this.totalCount = nextValue
-  //   },
-  // },
+  methods: {
+    beforeEnter(el) {
+      // 表示される前の状態を element 使って？定義
+      console.log(`before enter: ${el}`)
+    },
+    enter(el, done) {
+      // el に出現・表示されるアニメーションを実行
+      // done: callback
+      console.log(`enter: ${el}`)
+    },
+    afterEvent(el) {
+      // 表示されたあとの定義
+      console.log(`after enter: ${el}`)
+    },
+    enterCancelled(el) {
+      // 表示アニメーションキャンセル時
+      console.log(`enter cancelled: ${el}`)
+    },
+    beforeLeave(el) {
+      console.log(`before leave: ${el}`)
+    },
+    leave(el, done) {
+      console.log(`leave: ${el}`)
+    },
+    afterLeave(el) {
+      console.log(`after leave: ${el}`)
+    },
+    leaveCancelled(el) {
+      console.log(`leave cancelled: ${el}`)
+    },
+  },
 })
 // こちらは global
 .component('my-title', {
