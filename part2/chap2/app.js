@@ -16,6 +16,7 @@ Vue.createApp({
         },
       ],
       selectedThumbnailId: undefined,
+      imageTransitionName: "prev",
       isVisible: false,
       thumbnailHeight: 0,
       isThumbnailLoaded: false
@@ -68,6 +69,9 @@ Vue.createApp({
     },
     onClickNext() {
       this.selectedThumbnailId = this.nextThumbnail.id
+    },
+    afterLeave() {
+      this.selectedThumbnailId = undefined
     },
   },
 }).mount("#app")
